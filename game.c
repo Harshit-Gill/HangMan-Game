@@ -61,73 +61,10 @@ void printHangman(int livesLeft) {
     printf("=============\n\n");
 }
 
-/* Here sizes are hardcoded: up to 100 words, each up to 49 chars (+ '\0') */
-int load_technology(char words[][50], char hints[][50]) {
-    FILE *f = fopen("words.txt", "r");
+int load_category(const char* filename,char words[][50], char hints[][50]) {
+    FILE *f = fopen(filename, "r");
     if (!f) {
-        printf("Could not open words.txt\n");
-        return 0;
-    }
-
-    int count = 0;
-    while (count < 100 && fscanf(f, "%49s %49[^\n]", words[count], hints[count]) == 2) {
-        count++;
-    }
-
-    fclose(f);
-    return count;
-}
-
-int load_countries(char words[][50], char hints[][50]) {
-    FILE *f = fopen("countries.txt", "r");
-    if (!f) {
-        printf("Could not open countries.txt\n");
-        return 0;
-    }
-
-    int count = 0;
-    while (count < 100 && fscanf(f, "%49s %49[^\n]", words[count], hints[count]) == 2) {
-        count++;
-    }
-
-    fclose(f);
-    return count;
-}
-
-int load_fruits(char words[][50], char hints[][50]) {
-    FILE *f = fopen("fruits.txt", "r");
-    if (!f) {
-        printf("Could not open fruits.txt\n");
-        return 0;
-    }
-
-    int count = 0;
-    while (count < 100 && fscanf(f, "%49s %49[^\n]", words[count], hints[count]) == 2) {
-        count++;
-    }
-
-    fclose(f);
-    return count;
-}
-int load_animals(char words[][50], char hints[][50]) {
-    FILE *f = fopen("animals.txt", "r");
-    if (!f) {
-        printf("Could not open animals.txt\n");
-        return 0;
-    }
-
-    int count = 0;
-    while (count < 100 && fscanf(f, "%49s %49[^\n]", words[count], hints[count]) == 2) {
-        count++;
-    }
-
-    fclose(f);
-    return count;
-}
-int load_movies(char words[][50], char hints[][50]) {
-    FILE *f = fopen("movies.txt", "r");
-    if (!f) {
-        printf("Could not open movies.txt\n");
+        printf("Could not open %s\n", filename);
         return 0;
     }
 
@@ -263,29 +200,29 @@ else{
     printf("%s\n", choice);
 
     if(strcmp(choice,"countries")==0){
-        total = load_countries(words, hints);
+        total = load_category("countries.txt", words, hints);
         printf("Loaded Countries!\n");
     }
     else if(strcmp(choice,"movies")==0){
-        total = load_movies(words, hints);
+        total = load_category("movies.txt", words, hints);
         printf("Loaded Movies!\n");
     } 
     else if(strcmp(choice,"technology")==0){
-        total = load_technology(words, hints);
+        total = load_category("technology.txt", words, hints);
         printf("Loaded Technology!\n");
     }
     else if(strcmp(choice,"animals")==0){
-        total = load_animals(words, hints);
+        total = load_category("animals.txt", words, hints);
         printf("Loaded Animals!\n");
     }
     else if(strcmp(choice,"fruits")==0){
-        total = load_fruits(words, hints);
+        total = load_category("fruits.txt", words, hints);
         printf("Loaded Fruits!\n");
     }
     
     else{
         printf("Invalid choice. Defaulting to Technology.\n");
-        total = load_technology(words, hints);
+        total = load_category("technology.txt", words, hints);
         printf("Loaded Technology!\n");
     }
 
